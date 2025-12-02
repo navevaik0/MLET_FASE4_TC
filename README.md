@@ -44,7 +44,8 @@ Também acompanha uma **API FastAPI**, para servir previsões após o modelo est
 📁 Estrutura do Projeto
 -----------------------
 
-`MLET_FASE4_TC/
+``` bash
+MLET_FASE4_TC/
 │   requirements.txt
 │
 ├── data/
@@ -66,7 +67,8 @@ Também acompanha uma **API FastAPI**, para servir previsões após o modelo est
 ├── kt_dir_test/
 ├── kt_test/
 │
-└── Pipeline_Petr4.ipynb`
+└── Pipeline_Petr4.ipynb
+```
 
 * * * * *
 
@@ -77,18 +79,23 @@ Também acompanha uma **API FastAPI**, para servir previsões após o modelo est
 
 **Windows (PowerShell)**
 
-`python -m venv venv
-venv\Scripts\activate`
+``` bash
+python -m venv venv
+venv\Scripts\activate
+```
 
 **Linux / macOS**
 
-`python3 -m venv venv
-source venv/bin/activate`
+``` bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
 ### 2\. Instalar dependências
 
-`pip install -r requirements.txt`
-
+``` bash
+pip install -r requirements.txt
+```
 * * * * *
 
 ▶️ Execução Principal (Notebook)
@@ -129,12 +136,15 @@ Após treinar o modelo via notebook, você pode iniciar a API:
 
 ### 1\. Iniciar a API
 
-`uvicorn api.main:app --host 0.0.0.0 --port 8000`
+``` bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000`
+```
 
 ### 2\. Acessar a documentação (Swagger)
 
-`http://localhost:8000/docs`
-
+``` bash
+http://localhost:8000/docs
+```
 * * * * *
 
 🧪 Endpoints Disponíveis
