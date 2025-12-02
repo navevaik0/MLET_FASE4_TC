@@ -1,0 +1,10 @@
+{
+  "n_lstm_layers": 1,
+  "lstm_units_0": 224,
+  "dropout_0": 0.30000000000000004,
+  "lstm_units_1": 64,
+  "dropout_1": 0.4,
+  "use_dense": false,
+  "dense_units": 72,
+  "learning_rate": 0.006820026103064649
+}
