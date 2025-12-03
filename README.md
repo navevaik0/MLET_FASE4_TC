@@ -54,15 +54,12 @@ MLET_FASE4_TC/
 │
 ├── models/
 │   ├── lstm_multistep.h5
-│   ├── lstm_multistep.keras
+│   ├── lstm_multistep_test.keras
+│   ├── lstm_multistep_tuned.keras
 │   ├── scaler.save
-│   └── scaler.pkl
 │
 ├── api/
 │   ├── main.py
-│   ├── data_collection.py
-│   └── artifacts/
-│
 │
 ├── kt_dir_test/
 ├── kt_test/
