@@ -1,219 +1,186 @@
-# 📈 LSTM Multi-Step Stock Forecast — PETR4.SA
+📈 LSTM Multi-Step Stock Forecast --- PETR4.SA
+============================================
 
-Este projeto implementa um pipeline completo para previsão de preços da ação **PETR4.SA** usando uma **Rede Neural LSTM** capaz de prever **5 passos à frente (t+1 a t+5)**.  
-Inclui coleta de dados, pré-processamento, treinamento, avaliação e uma **API FastAPI** para servir previsões em produção.
+Este projeto implementa um pipeline completo para previsão de preços da ação **PETR4.SA** usando uma **Rede Neural LSTM** capaz de prever **5 passos à frente (t+1 a t+5)**.\
+Todo o fluxo --- coleta, preparação dos dados, modelagem, treinamento, avaliação e geração de previsões --- é executado diretamente no **notebook principal (`Pipeline_Petr4.ipynb`)**.
 
----
+Também acompanha uma **API FastAPI**, para servir previsões após o modelo estar treinado.
 
-## 🚀 Funcionalidades
+* * * * *
 
-- Coleta automática dos dados (Yahoo Finance)
-- Limpeza e normalização da série temporal
-- Criação de janelas de 60 timesteps
-- Modelo LSTM com previsão multi-step
-- Avaliação (MAE, RMSE, MAPE)
-- Servidor FastAPI para inferência
-- Script para testes locais
-- Suporte a Docker
+🚀 Funcionalidades
+------------------
 
----
+-   Coleta de dados da ação PETR4.SA (Yahoo Finance)
 
-## 📁 Estrutura do Projeto
+-   Pré-processamento dos dados
 
-```
-FASE4_TC/
-│   README.md
+-   Criação das janelas de 60 timesteps
+
+-   Normalização dos valores
+
+-   Modelo LSTM multi-step (prevê 5 passos futuros)
+
+-   Avaliação: MAE, RMSE, MAPE
+
+-   Salvamento dos artefatos do modelo
+
+-   Execução completa via **Jupyter Notebook**
+
+-   API FastAPI para inferência:
+
+    -   `/predict`
+
+    -   `/predict/plot`
+
+    -   `/last-window`
+
+    -   `/health`
+
+    -   `/compare-models`
+
+* * * * *
+
+📁 Estrutura do Projeto
+-----------------------
+
+``` bash
+MLET_FASE4_TC/
 │   requirements.txt
 │
 ├── data/
-│   └── PETR4.SA.csv
+│   ├── PETR4.SA.csv
+│   └── processed_petr4_data.csv
 │
 ├── models/
 │   ├── lstm_multistep.h5
-│   ├── lstm_multistep.keras
-│   └── scaler.save
+│   ├── lstm_multistep_test.keras
+│   ├── lstm_multistep_tuned.keras
+│   ├── scaler.save
 │
-├── src/
-│   ├── data_collection.py
-│   ├── preprocess.py
-│   ├── model.py
-│   ├── train.py
-│   └── api/
-│       └── main.py
+├── api/
+│   ├── main.py
 │
-└── examples/
-    └── run_predict.py
+├── kt_dir_test/
+├── kt_test/
+│
+└── Pipeline_Petr4.ipynb
 ```
 
----
+* * * * *
 
-## 🔧 Instalação
+🔧 Instalação
+-------------
 
-### 1. Criar ambiente virtual
+### 1\. Criar ambiente virtual
 
 **Windows (PowerShell)**
-```powershell
+
+``` bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
 **Linux / macOS**
-```bash
+
+``` bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 2. Instalar dependências
-```bash
+### 2\. Instalar dependências
+
+``` bash
 pip install -r requirements.txt
 ```
+* * * * *
 
----
+▶️ Execução Principal (Notebook)
+--------------------------------
 
-## 📥 Coletar dados PETR4.SA
+Toda a execução do projeto ocorre no notebook:
 
-```bash
-python src/data_collection.py
+`Pipeline_Petr4.ipynb`
+
+No notebook você encontrará:
+
+-   coleta dos dados
+
+-   limpeza e preparação
+
+-   criação das janelas
+
+-   normalização
+
+-   arquitetura LSTM
+
+-   treinamento
+
+-   avaliação
+
+-   previsões (t+1 a t+5)
+
+-   salvamento do modelo e scaler
+
+Após isso, os artefatos ficam disponíveis na pasta `models/`.
+
+* * * * *
+
+▶️ Execução da API
+---------------------------
+
+Após treinar o modelo via notebook, você pode iniciar a API:
+
+### 1\. Iniciar a API
+
+``` bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000`
 ```
 
-Arquivo gerado em:
+### 2\. Acessar a documentação (Swagger)
+
+``` bash
+http://localhost:8000/docs
 ```
-data/PETR4.SA.csv
-```
+* * * * *
 
----
+🧪 Endpoints Disponíveis
+------------------------
 
-## 🧠 Treinar o modelo LSTM
+| Método | Rota | Descrição |
+| --- | --- | --- |
+| GET | `/health` | Verifica se a API está online |
+| GET | `/last-window` | Exibe a última janela usada no modelo |
+| POST | `/predict` | Retorna previsões t+1 a t+5 |
+| POST | `/predict/plot` | Retorna gráfico Base64 |
+| GET | `/compare-models` | Lista e compara os modelos disponíveis |
 
-```bash
-python -m src.train
-```
+* * * * *
 
-O script irá:
+🤖 Arquitetura do Modelo LSTM
+-----------------------------
 
-- Ler o CSV  
-- Criar sequências de 60 timesteps  
-- Preparar horizonte de 5 passos  
-- Treinar o modelo  
-- Avaliar  
-- Salvar arquivos em `models/`:
+-   Janela de entrada: **60 timesteps**
 
-```
-models/lstm_multistep.keras
-models/lstm_multistep.h5
-models/scaler.save
-```
+-   Previsão para: **5 passos futuros**
 
----
+-   Duas camadas LSTM empilhadas
 
-## 🔮 Testar previsão local
+-   Camada Dense final para saída multi-step
 
-```bash
-python examples/run_predict.py
-```
+-   Otimizador: **Adam**
 
-Exemplo de saída:
-```
-Previsões (t+1 a t+5): [...]
-```
+-   Loss: **MSE**
 
----
+-   Métricas: **MAE, RMSE, MAPE**
 
-## 🌐 Subir API FastAPI
+* * * * *
 
-```bash
-uvicorn src.api.main:app --host 0.0.0.0 --port 8000
-```
+🧑‍💻 Autores
+-------------
 
-Acesse:
+Projeto desenvolvido como parte do **Tech Challenge -- Fase 4 (FIAP)**.
 
-- http://localhost:8000  
-- http://localhost:8000/docs
+-   **Erick Navevaiko**
 
----
-
-## 🎯 Exemplo de chamada ao endpoint `/predict`
-
-**Payload mínimo (60 valores):**
-```json
-{
-  "recent_closes": [10.1, 10.2, 10.3, ... 60 valores ...]
-}
-```
-
-**Resposta:**
-```json
-{
-  "predicted": [valor_t1, valor_t2, valor_t3, valor_t4, valor_t5]
-}
-```
-
----
-
-## 🐳 Docker (Opcional)
-
-### Build
-```bash
-docker build -t lstm-api .
-```
-
-### Run
-```bash
-docker run -p 8000:8000 -v $(pwd)/models:/app/models lstm-api
-```
-
----
-
-## 🧪 Testes rápidos
-
-```bash
-curl http://localhost:8000/health
-```
-
----
-
-## ⚠️ Problemas comuns
-
-### "Provide at least 60 closing prices"
-Você enviou menos de 60 preços.
-
-### Erro ao carregar `lstm_multistep.h5`
-A API tenta automaticamente:
-1. `models/lstm_multistep.keras`  
-2. `models/lstm_multistep.h5`
-
-### "ModuleNotFoundError: src"
-Execute sempre da raiz:
-```bash
-python -m src.train
-```
-
----
-
-## 📝 Tecnologias
-
-- Python 3.10+
-- TensorFlow / Keras
-- NumPy / Pandas
-- FastAPI
-- Yahoo Finance API (yfinance)
-- Docker
-
----
-
-## 🎓 Finalidade Acadêmica
-
-Projeto desenvolvido para o **Tech Challenge – Fase 4 da FIAP**, demonstrando:
-
-- Manipulação de séries temporais  
-- Modelos LSTM multi-step  
-- Deploy via API  
-- Boas práticas de engenharia de Machine Learning  
-
----
-
-## 📬 Autores
-
-**Erick Navevaiko e Pedro Paolielo**  
-FIAP – Pós-Tech  
-Tech Challenge Fase 4
+-   **Pedro Paolielo**
