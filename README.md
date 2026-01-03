@@ -2,7 +2,7 @@
 ============================================
 
 Este projeto implementa um pipeline completo para previsão de preços da ação **PETR4.SA** usando uma **Rede Neural LSTM** capaz de prever **5 passos à frente (t+1 a t+5)**.\
-Todo o fluxo --- coleta, preparação dos dados, modelagem, treinamento, avaliação e geração de previsões --- é executado diretamente no **notebook principal (`Pipeline_Petr4.ipynb`)**.
+Todo o fluxo (coleta, preparação dos dados, modelagem, treinamento, avaliação e geração de previsões) é executado diretamente no **notebook principal (`Pipeline_Petr4.ipynb`)**.
 
 Também acompanha uma **API FastAPI**, para servir previsões após o modelo estar treinado.
 
