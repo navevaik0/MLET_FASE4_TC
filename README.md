@@ -179,7 +179,7 @@ http://localhost:8000/docs
 🧑‍💻 Autores
 -------------
 
-Projeto desenvolvido como parte do **Tech Challenge -- Fase 4 (FIAP)**.
+Projeto desenvolvido como parte do **Tech Challenge - Fase 4 (FIAP)**.
 
 -   **Erick Navevaiko**
 
